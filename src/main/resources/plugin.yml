@@ -2,3 +2,11 @@ name: lavarises
 version: '${project.version}'
 main: com.ethreal.lavarises.LavaRises
 api-version: '1.20'
+commands:
+  lava:
+    description: Lava controls
+    permission: lavarises.controls
+    usage: /<command> arg
+permissions:
+  lavarises.controls:
+    description: Allows the user to control the lava
