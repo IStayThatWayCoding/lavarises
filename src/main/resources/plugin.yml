@@ -1,0 +1,4 @@
+name: lavarises
+version: '${project.version}'
+main: com.ethreal.lavarises.Lavarises
+api-version: '1.20'
