@@ -1,6 +1,5 @@
 package com.ethreal.lavarises.commands;
 
-import com.ethreal.lavarises.LavaRises;
 import com.ethreal.lavarises.utilities.LavaUtils;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.command.Command;
@@ -16,47 +15,57 @@ public class LavaCommand implements CommandExecutor {
         if (sender instanceof Player) { // If the sender is a player
             Player senderAsPlayer = (Player) sender;
             if (args.length == 0) {
-                sendVersion(senderAsPlayer);
+                senderAsPlayer.sendMessage(MiniMessage.miniMessage().deserialize("<red>No args, this command requires args.</red>"));
             } else if (args.length == 1) {
                 switch (args[0].toLowerCase()) {
                     case "start":
-                        utils.startLava();
+                        if (utils.startLava()) {
+                            senderAsPlayer.sendMessage(MiniMessage.miniMessage().deserialize(
+                                    "<green>Game started</green>"
+                            ));
+                        } else {
+                            senderAsPlayer.sendMessage(MiniMessage.miniMessage().deserialize(
+                                    "<red>Failed to start, already running.</red>"
+                            ));
+                        }
+                        return true;
+                    case "stop":
+                        utils.stopLava();
                         senderAsPlayer.sendMessage(MiniMessage.miniMessage().deserialize(
-                                "Lava started"
+                                "<red>Game stopped</red>"
                         ));
-                    case "pause":
-                        utils.pauseLava();
+                        return true;
+                    case "resume":
+                        utils.resumeLava();
                         senderAsPlayer.sendMessage(MiniMessage.miniMessage().deserialize(
-                                "Lava paused"
+                                "<green>Game resumed</green>"
                         ));
-                    case "unpause":
-                        utils.unpauseLava();
+                        return true;
+                    case "restart":
+                        utils.restartLava();
                         senderAsPlayer.sendMessage(MiniMessage.miniMessage().deserialize(
-                                "Lava un-paused"
+                                "<green>Game restarted</green>"
                         ));
+                        return true;
+                    case "clear":
+                        utils.lavaClear();
+                        senderAsPlayer.sendMessage(MiniMessage.miniMessage().deserialize(
+                                "<green>Clearing lava</green>"
+                        ));
+                        return true;
                     case "up":
-                        LavaRises.level += 1; // Increment level by 1
-                        senderAsPlayer.sendMessage(MiniMessage.miniMessage().deserialize(
-                                "Lava level is now " + LavaRises.level
-                        ));
+                        utils.lavaSpawn();
+                        return true;
                     case "down":
-                        LavaRises.level -= 1; // Lower level by 1
-                        senderAsPlayer.sendMessage(MiniMessage.miniMessage().deserialize(
-                                "Lava level is now " + LavaRises.level
-                        ));
-                    case "version":
-                        sendVersion(senderAsPlayer);
+                        utils.lavaDown();
+                        return true;
                 }
             } else {
-
+                senderAsPlayer.sendMessage(MiniMessage.miniMessage().deserialize(
+                        "<red>Too many args</red>"
+                ));
             }
         }
         return false;
-    }
-
-    private void sendVersion(Player player) {
-        player.sendMessage(MiniMessage.miniMessage().deserialize(
-                ""
-        ));
     }
 }
