@@ -1,4 +1,4 @@
 name: lavarises
 version: '${project.version}'
-main: com.ethreal.lavarises.Lavarises
+main: com.ethreal.lavarises.LavaRises
 api-version: '1.20'

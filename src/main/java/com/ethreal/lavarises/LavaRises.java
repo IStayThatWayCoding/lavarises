@@ -2,7 +2,7 @@ package com.ethreal.lavarises;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-public final class Lavarises extends JavaPlugin {
+public final class LavaRises extends JavaPlugin {
 
     @Override
     public void onEnable() {
